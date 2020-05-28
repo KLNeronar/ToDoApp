@@ -8,9 +8,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sample.animations.Shaker;
+import sample.database.DatabaseHandler;
+import sample.model.User;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class LoginController {
@@ -33,12 +38,14 @@ public class LoginController {
     @FXML
     private Button loginSingupButton;
 
+    private DatabaseHandler databaseHandler;
+
     @FXML
     void initialize() {
 
-        String loginText = loginUsername.getText().trim();
-        String loginPwd = loginPassword.getText().trim();
+        databaseHandler = new DatabaseHandler();
 
+        //Handling Sing Up Button
         loginSingupButton.setOnAction(actionEvent -> {
 
             //Take users to signup screen
@@ -59,20 +66,42 @@ public class LoginController {
 
         });
 
+        //Handling Login Button
         loginButton.setOnAction(actionEvent -> {
 
-            if (!loginText.equals("") || !loginPwd.equals("")) {
-                loginUser(loginText, loginPwd);
-            } else {
-                System.out.println("Error login in user!");
+            String loginText = loginUsername.getText().trim();
+            String loginPwd = loginPassword.getText().trim();
+
+            User user = new User();
+            user.setUserName(loginText);
+            user.setPassword(loginPwd);
+
+            ResultSet userRow = databaseHandler.getUser(user);
+
+            int counter = 0;
+
+            try {
+                while(userRow.next()) {
+                    counter++;
+
+                    String name = userRow.getString("firstname");
+
+                    System.out.println("Welcome! " + name);
+                }
+
+                if (counter ==1) {
+                    System.out.println("Login Successful!");
+                } else {
+                    Shaker usernameShaker = new Shaker(loginUsername);
+                    Shaker passwordShaker = new Shaker(loginPassword);
+                    usernameShaker.shake();
+                    passwordShaker.shake();
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         });
-    }
-
-    private void loginUser(String userName, String password) {
-
-        //Check in the database if the user exists
-        //If true, we take them to AddItem Screen
     }
 
 }
