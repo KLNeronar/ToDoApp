@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.AddItemController">
+<AnchorPane fx:id="rootAnchorPane" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.AddItemController">
    <children>
       <AnchorPane prefHeight="77.0" prefWidth="700.0" style="-fx-background-color: #00b0ff;">
          <children>
@@ -18,7 +17,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <Label alignment="CENTER" layoutX="231.0" layoutY="182.0" prefHeight="36.0" prefWidth="239.0" text="No Tasks for Today, yet!">
+      <Label fx:id="noTaskLabel" alignment="CENTER" layoutX="231.0" layoutY="182.0" prefHeight="36.0" prefWidth="239.0" text="No Tasks for Today, yet!">
          <font>
             <Font size="18.0" />
          </font>

@@ -90,7 +90,7 @@ public class LoginController {
                 }
 
                 if (counter ==1) {
-                    System.out.println("Login Successful!");
+                    showAddItemScreen();
                 } else {
                     Shaker usernameShaker = new Shaker(loginUsername);
                     Shaker passwordShaker = new Shaker(loginPassword);
@@ -102,6 +102,25 @@ public class LoginController {
                 e.printStackTrace();
             }
         });
+    }
+
+    private void showAddItemScreen() {
+
+        //Take users to add item screen
+        loginSingupButton.getScene().getWindow().hide();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/sample/view/addItem.fxml"));
+
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Parent root = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
     }
 
 }
