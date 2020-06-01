@@ -39,8 +39,8 @@ public class AddItemController {
             Shaker addButtonShaker = new Shaker(addButton);
             addButtonShaker.shake();
 
-            FadeTransition fadeTransition = new FadeTransition(Duration.millis(2000), addButton);
-            FadeTransition labelTransition = new FadeTransition(Duration.millis(2000), noTaskLabel);
+            FadeTransition fadeAddButton = new FadeTransition(Duration.millis(2000), addButton);
+            FadeTransition fadeNoTaskLabel = new FadeTransition(Duration.millis(2000), noTaskLabel);
 
             System.out.println("Added Clicked!");
 
@@ -49,28 +49,28 @@ public class AddItemController {
             //addButton.setOpacity(0);
             //noTaskLabel.setOpacity(0);
 
-            fadeTransition.setFromValue(1f);
-            fadeTransition.setToValue(0f);
-            fadeTransition.setCycleCount(1);
-            fadeTransition.setAutoReverse(false);
-            fadeTransition.play();
+            fadeAddButton.setFromValue(1f);
+            fadeAddButton.setToValue(0f);
+            fadeAddButton.setCycleCount(1);
+            fadeAddButton.setAutoReverse(false);
+            fadeAddButton.play();
 
-            labelTransition.setFromValue(1f);
-            labelTransition.setToValue(0f);
-            labelTransition.setCycleCount(1);
-            labelTransition.setAutoReverse(false);
-            labelTransition.play();
+            fadeNoTaskLabel.setFromValue(1f);
+            fadeNoTaskLabel.setToValue(0f);
+            fadeNoTaskLabel.setCycleCount(1);
+            fadeNoTaskLabel.setAutoReverse(false);
+            fadeNoTaskLabel.play();
 
             try {
                 AnchorPane formPane = FXMLLoader.load(getClass().getResource("/sample/view/addItemForm.fxml"));
 
-                FadeTransition rootTransition = new FadeTransition(Duration.millis(2000), formPane);
+                FadeTransition fadeFormPane = new FadeTransition(Duration.millis(2000), formPane);
 
-                rootTransition.setFromValue(0f);
-                rootTransition.setToValue(1f);
-                rootTransition.setCycleCount(1);
-                rootTransition.setAutoReverse(false);
-                rootTransition.play();
+                fadeFormPane.setFromValue(0f);
+                fadeFormPane.setToValue(1f);
+                fadeFormPane.setCycleCount(1);
+                fadeFormPane.setAutoReverse(false);
+                fadeFormPane.play();
 
                 rootAnchorPane.getChildren().setAll(formPane);
             } catch (IOException e) {

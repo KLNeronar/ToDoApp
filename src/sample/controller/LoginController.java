@@ -40,6 +40,8 @@ public class LoginController {
 
     private DatabaseHandler databaseHandler;
 
+    protected static User user;
+
     @FXML
     void initialize() {
 
@@ -72,7 +74,7 @@ public class LoginController {
             String loginText = loginUsername.getText().trim();
             String loginPwd = loginPassword.getText().trim();
 
-            User user = new User();
+            user = new User();
             user.setUserName(loginText);
             user.setPassword(loginPwd);
 

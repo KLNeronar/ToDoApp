@@ -1,5 +1,6 @@
 package sample.database;
 
+import sample.model.Task;
 import sample.model.User;
 
 import java.sql.*;
@@ -20,7 +21,7 @@ public class DatabaseHandler extends Configs {
         return dbConnection;
     }
 
-    //Write
+    //Add new user to the user table
     public void signUpUser(User user) {
 
         String insert = "INSERT INTO " + Const.USERS_TABLE+"("+Const.USERS_FIRSTNAME
@@ -47,6 +48,7 @@ public class DatabaseHandler extends Configs {
         }
     }
 
+    //Get existing user from user table
     public ResultSet getUser(User user) {
 
         ResultSet resultSet = null;
@@ -77,6 +79,30 @@ public class DatabaseHandler extends Configs {
         }
 
         return resultSet;
+    }
+
+    //Write new task into the tasks table
+    public void addTask(Task task, Integer userID) {
+
+        String insert = "INSERT INTO " + Const.TASKS_TABLE+"("+Const.TASKS_USERID
+                +","+Const.TASKS_TASK+","+Const.TASKS_DATE+","
+                +Const.TASKS_DESCRIPTION+")"+" VALUES(?,?,?,?)";
+
+        try {
+            PreparedStatement preparedStatement = getDbConnection().prepareStatement(insert);
+
+            preparedStatement.setInt(1, userID);
+            preparedStatement.setString(2, task.getTask());
+            preparedStatement.setTimestamp(3, task.getDatecreated());
+            preparedStatement.setString(4, task.getDescription());
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     //Read
