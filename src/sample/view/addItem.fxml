@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -17,15 +18,16 @@
             </Label>
          </children>
       </AnchorPane>
-      <Label fx:id="noTaskLabel" alignment="CENTER" layoutX="231.0" layoutY="182.0" prefHeight="36.0" prefWidth="239.0" text="No Tasks for Today, yet!">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <ImageView fx:id="addButton" fitHeight="53.0" fitWidth="59.0" layoutX="324.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="addButton" fitHeight="53.0" fitWidth="59.0" layoutX="327.0" layoutY="333.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/baseline_add_circle_black_18dp.png" />
          </image>
       </ImageView>
+      <ListView fx:id="taskList" layoutX="22.0" layoutY="121.0" prefHeight="208.0" prefWidth="663.0" />
+      <Label alignment="CENTER" layoutX="208.0" layoutY="77.0" prefHeight="44.0" prefWidth="285.0" text="Tasks">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

@@ -1,14 +1,20 @@
 package sample.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.ResourceBundle;
+
+import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 import sample.animations.Shaker;
 import sample.database.DatabaseHandler;
 import sample.model.Task;
@@ -23,6 +29,9 @@ public class addItemFormController {
 
     @FXML
     private URL location;
+
+    @FXML
+    private AnchorPane leafAnchorPane;
 
     @FXML
     private TextField taskField;
@@ -57,33 +66,29 @@ public class addItemFormController {
 
             Task task = new Task(dateCreated, taskDescription, taskName);
 
-            ResultSet userRow = databaseHandler.getUser(loggedUser);
+            loggedUser = databaseHandler.getUser(loggedUser);
 
-            int counter = 0;
-
-            Integer userID = 0;
-
-            try {
-                while(userRow.next()) {
-                    counter++;
-
-                    String name = userRow.getString("firstname");
-
-                    userID = userRow.getInt("userid");
-
-                    System.out.println("Welcome! " + name);
-                }
-
-                if (counter ==1) {
-                    databaseHandler.addTask(task, userID);
-                } else {
-                    System.out.println("User not registered");
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
+            if (loggedUser.isInDatabase()) {
+                databaseHandler.addTask(task, loggedUser);
+            } else {
+                System.out.println("User not registered");
             }
 
+            try {
+                AnchorPane formPane = FXMLLoader.load(getClass().getResource("/sample/view/addItem.fxml"));
+
+                FadeTransition fadeFormPane = new FadeTransition(Duration.millis(2000), formPane);
+
+                fadeFormPane.setFromValue(0f);
+                fadeFormPane.setToValue(1f);
+                fadeFormPane.setCycleCount(1);
+                fadeFormPane.setAutoReverse(false);
+                fadeFormPane.play();
+
+                leafAnchorPane.getChildren().setAll(formPane);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         });
     }

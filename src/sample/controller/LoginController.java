@@ -78,30 +78,15 @@ public class LoginController {
             user.setUserName(loginText);
             user.setPassword(loginPwd);
 
-            ResultSet userRow = databaseHandler.getUser(user);
+            user = databaseHandler.getUser(user);
 
-            int counter = 0;
-
-            try {
-                while(userRow.next()) {
-                    counter++;
-
-                    String name = userRow.getString("firstname");
-
-                    System.out.println("Welcome! " + name);
-                }
-
-                if (counter ==1) {
-                    showAddItemScreen();
-                } else {
-                    Shaker usernameShaker = new Shaker(loginUsername);
-                    Shaker passwordShaker = new Shaker(loginPassword);
-                    usernameShaker.shake();
-                    passwordShaker.shake();
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
+            if (user.isInDatabase()) {
+                showAddItemScreen();
+            } else {
+                Shaker usernameShaker = new Shaker(loginUsername);
+                Shaker passwordShaker = new Shaker(loginPassword);
+                usernameShaker.shake();
+                passwordShaker.shake();
             }
         });
     }

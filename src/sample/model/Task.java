@@ -8,6 +8,8 @@ public class Task {
     private String description;
     private String task;
 
+    private Integer taskID;
+
     public Task() {
     }
 
@@ -15,6 +17,13 @@ public class Task {
         this.datecreated = datecreated;
         this.description = description;
         this.task = task;
+    }
+
+    public Task(Timestamp datecreated, String description, String task, Integer taskID) {
+        this.datecreated = datecreated;
+        this.description = description;
+        this.task = task;
+        this.taskID = taskID;
     }
 
     public Timestamp getDatecreated() {
@@ -40,4 +49,6 @@ public class Task {
     public void setTask(String task) {
         this.task = task;
     }
+
+    public Integer getTaskID() { return taskID; }
 }

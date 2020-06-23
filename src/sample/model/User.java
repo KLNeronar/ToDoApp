@@ -8,17 +8,36 @@ public class User {
     private String password;
     private String location;
     private String gender;
+    private boolean inDatabase;
+    private Integer userID;
 
     public User() {
+        this.inDatabase = false;
+        this.userID = -1;
     }
 
-    public User(String firstName, String lastName, String userName, String password, String location, String gender) {
+    public User(String firstName, String lastName, String userName, String password,
+                String location, String gender) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
         this.password = password;
         this.location = location;
         this.gender = gender;
+        this.inDatabase = false;
+        this.userID = -1;
+    }
+
+    public User(String firstName, String lastName, String userName, String password,
+                String location, String gender, boolean inDatabase, Integer userID) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = userName;
+        this.password = password;
+        this.location = location;
+        this.gender = gender;
+        this.inDatabase = inDatabase;
+        this.userID = userID;
     }
 
     public String getFirstName() {
@@ -68,4 +87,14 @@ public class User {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
+    public boolean isInDatabase() { return inDatabase; }
+
+    //public void setInDatabase(boolean inDatabase) {
+    //    this.inDatabase = inDatabase;
+    //}
+
+    public Integer getUserID() { return userID; }
+
+    //public void setUserID(Integer userID) { this.userID = userID; }
 }
