@@ -1,3 +1,8 @@
+/*
+Task class:
+Contains all the important info on the tasks that are stored
+in the database for each user.
+ */
 package sample.model;
 
 import java.sql.Timestamp;
@@ -10,15 +15,18 @@ public class Task {
 
     private Integer taskID;
 
+    //Default Constructor
     public Task() {
     }
 
+    //Constructor used to create a new task that will be inserted into the app database.
     public Task(Timestamp datecreated, String description, String task) {
         this.datecreated = datecreated;
         this.description = description;
         this.task = task;
     }
 
+    //Constructor used to get the task from the app's database
     public Task(Timestamp datecreated, String description, String task, Integer taskID) {
         this.datecreated = datecreated;
         this.description = description;
@@ -26,6 +34,7 @@ public class Task {
         this.taskID = taskID;
     }
 
+    //Getters and setters
     public Timestamp getDatecreated() {
         return datecreated;
     }
@@ -50,5 +59,6 @@ public class Task {
         this.task = task;
     }
 
+    //There is no setter method for the taskID, since it is unchangeable.
     public Integer getTaskID() { return taskID; }
 }

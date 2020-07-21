@@ -1,3 +1,7 @@
+/*
+User class:
+Contains all the important info on the User that uses the app.
+ */
 package sample.model;
 
 public class User {
@@ -11,11 +15,15 @@ public class User {
     private boolean inDatabase;
     private Integer userID;
 
+    //Default constructor. Initiates a User Object with no personal info.
+    //The User Object will be set up as not existing in the apps database and
+    //not having a valid user ID.
     public User() {
         this.inDatabase = false;
         this.userID = -1;
     }
 
+    //Sets up the new User. Used when the user tries to create an account.
     public User(String firstName, String lastName, String userName, String password,
                 String location, String gender) {
         this.firstName = firstName;
@@ -28,6 +36,8 @@ public class User {
         this.userID = -1;
     }
 
+    //Sets up the User that exists in the database. Fills out all the info available
+    //about the user.
     public User(String firstName, String lastName, String userName, String password,
                 String location, String gender, boolean inDatabase, Integer userID) {
         this.firstName = firstName;
@@ -40,6 +50,7 @@ public class User {
         this.userID = userID;
     }
 
+    //Getters and Setters
     public String getFirstName() {
         return firstName;
     }
@@ -88,6 +99,8 @@ public class User {
         this.gender = gender;
     }
 
+    //No setter for the following attributes.
+    //They are unchangeable.
     public boolean isInDatabase() { return inDatabase; }
 
     //public void setInDatabase(boolean inDatabase) {

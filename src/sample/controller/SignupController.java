@@ -1,3 +1,6 @@
+/*
+Manages the Sign Up scene/screen.
+ */
 package sample.controller;
 
 import javafx.fxml.FXML;
@@ -46,12 +49,16 @@ public class SignupController {
     @FXML
     void initialize() {
 
+        //Initializes the creation of a new user upon the click
+        //of the button.
         signupButton.setOnAction(actionEvent -> {
 
             createUser();
         });
     }
 
+    //Creates the new user based on the information provided in each
+    //data field.
     private void createUser() {
 
         DatabaseHandler databaseHandler = new DatabaseHandler();
@@ -72,6 +79,7 @@ public class SignupController {
 
         User user = new User(name, lastName, userName, password, location, gender);
 
+        //Enters the new user into the database.
         databaseHandler.signUpUser(user);
     }
 

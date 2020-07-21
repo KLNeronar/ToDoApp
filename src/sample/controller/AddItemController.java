@@ -1,29 +1,24 @@
+/*
+Manages the page that displays users task table.
+ */
 package sample.controller;
 
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -58,9 +53,12 @@ public class AddItemController {
     @FXML
     void initialize() {
 
+        //Connect with the database
         databaseHandler = new DatabaseHandler();
+        //Get the current user
         loggedUser = LoginController.user;
 
+        //Updates the table of tasks.
         updateGUI();
 
         taskList.setOnMouseClicked(event -> {
@@ -94,8 +92,12 @@ public class AddItemController {
             }
         });
 
+        //Add Task Button management
+        //Sends the user to the Task Form page where the user can enter
+        //the information of the new task.
         addButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 
+            //Animation of transition from Task Table page to Task creation form
             Shaker addButtonShaker = new Shaker(addButton);
             addButtonShaker.shake();
 
@@ -112,6 +114,7 @@ public class AddItemController {
             fadeAddButton.setAutoReverse(false);
             fadeAddButton.play();
 
+            //Transition to the New Task Form page
             try {
                 AnchorPane formPane = FXMLLoader.load(getClass().getResource("/sample/view/addItemForm.fxml"));
 

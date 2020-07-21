@@ -1,3 +1,6 @@
+/*
+Sets up constants that exist in the SQL database.
+ */
 package sample.database;
 
 public class Const {

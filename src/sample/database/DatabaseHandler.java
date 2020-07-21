@@ -1,7 +1,9 @@
+/*
+This Class interacts with the SQL database.
+It is the bridge between the app and the data that is used in it.
+ */
 package sample.database;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import sample.model.Task;
 import sample.model.User;
 
@@ -10,8 +12,10 @@ import java.util.ArrayList;
 
 public class DatabaseHandler extends Configs {
 
+    //Connection to the database used by the app
     Connection dbConnection;
 
+    //Connects to the database and returns the said connection variable
     public Connection getDbConnection() throws ClassNotFoundException, SQLException {
         String connectionString = "jdbc:mysql://" + dbHost + ":"
                 + dbPort + "/"
@@ -24,14 +28,18 @@ public class DatabaseHandler extends Configs {
         return dbConnection;
     }
 
-    //Add new user to the user table
+    //Adds new user to the user table in the database
     public void signUpUser(User user) {
 
+        //SQL language code that will be inserted into the connection to
+        //execute the required command in the database
         String insert = "INSERT INTO " + Const.USERS_TABLE+"("+Const.USERS_FIRSTNAME
                 +","+Const.USERS_LASTNAME+","+Const.USERS_USERNAME+","
                 +Const.USERS_PASSWORD+","+Const.USERS_LOCATION+","
                 +Const.USERS_GENDER+")"+"VALUES(?,?,?,?,?,?)";
 
+        //Sets up the values that need to be inserted into the User table of the
+        //database and executes the above SQL command.
         try {
             PreparedStatement preparedStatement = getDbConnection().prepareStatement(insert);
 
@@ -63,7 +71,7 @@ public class DatabaseHandler extends Configs {
                     Const.USERS_USERNAME + "=?" + " AND " + Const.USERS_PASSWORD
                     + "=?";
 
-            //select all from users where username="paulo" and password="password"
+            //select all from users where username="username" and password="password"
 
             try {
                 PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
@@ -93,6 +101,7 @@ public class DatabaseHandler extends Configs {
         Integer userID = -1;
 
         try {
+            //Get all the information about the user from the database.
             while(resultSet.next()) {
                 counter++;
 
@@ -104,6 +113,8 @@ public class DatabaseHandler extends Configs {
 
             }
 
+            //If the user exists, set up the User Object and return it to the
+            //caller.
             if (counter ==1) {
 
                 returnUser = new User(firstName, lastName, userName, password,
@@ -116,6 +127,7 @@ public class DatabaseHandler extends Configs {
             e.printStackTrace();
         }
 
+        //Returns the user that was set in the parameters of the method.
         return user;
     }
 
@@ -175,16 +187,20 @@ public class DatabaseHandler extends Configs {
         Integer taskID;
 
         try {
+            //Retrieves every task that the selected user has.
             while(resultSet.next()) {
                 counter++;
 
+                //Get important info on each task
                 taskName = resultSet.getString("task");
                 taskDescription = resultSet.getString("description");
                 dateCreated = resultSet.getTimestamp("datecreated");
                 taskID = resultSet.getInt("taskid");
 
+                //Create new Task Object for each extracted task
                 Task task = new Task(dateCreated, taskDescription, taskName, taskID);
 
+                //Store the above Task Object in the list of user tasks
                 taskList.add(task);
             }
 
@@ -192,13 +208,14 @@ public class DatabaseHandler extends Configs {
             e.printStackTrace();
         }
 
+        //Return the list of user tasks
         return taskList;
 
     }
 
     //Update
 
-    //Delete
+    //Deletes the specified task
     public void deleteTask(Task task) {
         String insert = "DELETE FROM " + Const.TASKS_TABLE+" WHERE "+
                 Const.TASKS_ID + "=" + task.getTaskID();
