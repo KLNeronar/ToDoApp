@@ -213,7 +213,26 @@ public class DatabaseHandler extends Configs {
 
     }
 
-    //Update
+    //Update task
+    public void updateTask(Task task) {
+        String insert = "UPDATE " + Const.TASKS_TABLE +
+                " SET " + Const.TASKS_TASK + "=?, " + Const.TASKS_DESCRIPTION + "=?" +
+                " WHERE " + Const.TASKS_ID + "=?";
+
+        try {
+            PreparedStatement preparedStatement = getDbConnection().prepareStatement(insert);
+
+            preparedStatement.setString(1, task.getTask());
+            preparedStatement.setString(2, task.getDescription());
+            preparedStatement.setInt(3, task.getTaskID());
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     //Deletes the specified task
     public void deleteTask(Task task) {

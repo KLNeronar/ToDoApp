@@ -59,5 +59,21 @@ public class editTaskController {
             stage.close();
         });
 
+        //Update the managed task
+        updateTaskButton.setOnAction(actionEvent -> {
+
+            //Get the updated text fields
+            task.setTask(taskBox.getText());
+            task.setDescription(taskDescriptionBox.getText());
+
+            //Update the app database
+            databaseHandler.updateTask(task);
+
+            //Close the popup window.
+            Stage stage = (Stage) updateTaskButton.getScene().getWindow();
+
+            stage.close();
+        });
+
     }
 }
