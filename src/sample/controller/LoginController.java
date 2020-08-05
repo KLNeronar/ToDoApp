@@ -56,20 +56,32 @@ public class LoginController {
         loginSingupButton.setOnAction(actionEvent -> {
 
             //Take the user to signup screen
-            loginSingupButton.getScene().getWindow().hide();
+
+            //Get the current stage and hide it
+            Stage loginStage = (Stage) loginSingupButton.getScene().getWindow();
+            loginStage.hide();
+            //Get the location of the signup page
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/sample/view/signup.fxml"));
 
+            //Try to load that location
             try {
                 loader.load();
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
+            //Get root of the page that we are loading
             Parent root = loader.getRoot();
+            //Set that page as the new stage
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
+
+            //Display the stage and wait till it is closed.
             stage.showAndWait();
+
+            //Show the current stage after the new one was closed
+            loginStage.show();
 
         });
 

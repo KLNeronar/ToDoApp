@@ -91,44 +91,38 @@ public class DatabaseHandler extends Configs {
             System.out.print("Please Enter Your Credentials!");
         }
 
-        int counter = 0;
-        String userName = user.getUserName();
-        String password = user.getPassword();
-        String firstName = "";
-        String lastName = "";
-        String location = "";
-        String gender = "";
-        Integer userID = -1;
+        return getUserFromResultSet(user, resultSet);
+
+    }
+
+    //Check if user login is already in use
+    public boolean usernameTaken(User user) {
+
+        ResultSet resultSet = null;
+
+        String query = "SELECT * FROM " + Const.USERS_TABLE + " WHERE " +
+                Const.USERS_USERNAME + "=?";
 
         try {
-            //Get all the information about the user from the database.
-            while(resultSet.next()) {
-                counter++;
+            PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
 
-                userID = resultSet.getInt("userid");
-                firstName = resultSet.getString("firstname");
-                lastName = resultSet.getString("lastname");
-                location = resultSet.getString("location");
-                gender = resultSet.getString("gender");
+            preparedStatement.setString(1, user.getUserName());
 
-            }
-
-            //If the user exists, set up the User Object and return it to the
-            //caller.
-            if (counter ==1) {
-
-                returnUser = new User(firstName, lastName, userName, password,
-                        location, gender, true, userID);
-
-                return returnUser;
-            }
+            resultSet = preparedStatement.executeQuery();
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
 
-        //Returns the user that was set in the parameters of the method.
-        return user;
+        User returnedUser = getUserFromResultSet(user, resultSet);
+
+        if(returnedUser.isInDatabase()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     //Write new task into the tasks table
@@ -164,13 +158,12 @@ public class DatabaseHandler extends Configs {
 
         //Implement the extraction of tasks from database
         String query = "SELECT * FROM " + Const.TASKS_TABLE + " WHERE " +
-                Const.TASKS_USERID + "=" + user.getUserID();
+                Const.TASKS_USERID + "=?";
 
         try {
             PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
 
-            //preparedStatement.setString(1, user.getUserName());
-            //preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setInt(1, user.getUserID());
 
             resultSet = preparedStatement.executeQuery();
 
@@ -237,10 +230,12 @@ public class DatabaseHandler extends Configs {
     //Deletes the specified task
     public void deleteTask(Task task) {
         String insert = "DELETE FROM " + Const.TASKS_TABLE+" WHERE "+
-                Const.TASKS_ID + "=" + task.getTaskID();
+                Const.TASKS_ID + "=?";
 
         try {
             PreparedStatement preparedStatement = getDbConnection().prepareStatement(insert);
+
+            preparedStatement.setInt(1, task.getTaskID());
 
             preparedStatement.executeUpdate();
 
@@ -249,6 +244,50 @@ public class DatabaseHandler extends Configs {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    //Helping function:
+    //Returns User Object based on user and result set returned from database.
+    private User getUserFromResultSet(User user, ResultSet resultSet) {
+
+        int counter = 0;
+        String userName = user.getUserName();
+        String password = user.getPassword();
+        String firstName = "";
+        String lastName = "";
+        String location = "";
+        String gender = "";
+        Integer userID = -1;
+
+        try {
+            //Get all the information about the user from the database.
+            while(resultSet.next()) {
+                counter++;
+
+                userID = resultSet.getInt("userid");
+                firstName = resultSet.getString("firstname");
+                lastName = resultSet.getString("lastname");
+                location = resultSet.getString("location");
+                gender = resultSet.getString("gender");
+
+            }
+
+            //If the user exists, set up the User Object and return it to the
+            //caller.
+            if (counter ==1) {
+
+                User returnUser = new User(firstName, lastName, userName, password,
+                        location, gender, true, userID);
+
+                return returnUser;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        //Returns the user that was set in the parameters of the method.
+        return user;
     }
 
 }

@@ -28,13 +28,23 @@
             </Label>
          </children>
       </AnchorPane>
-      <TextField fx:id="signupFirstName" layoutX="165.0" layoutY="120.0" prefHeight="25.0" prefWidth="370.0" promptText="First Name" />
-      <TextField fx:id="signupLastName" layoutX="165.0" layoutY="160.0" prefHeight="25.0" prefWidth="370.0" promptText="Last Name" />
-      <TextField fx:id="signupUsername" layoutX="165.0" layoutY="200.0" prefHeight="25.0" prefWidth="370.0" promptText="Username" />
-      <TextField fx:id="signupLocation" layoutX="165.0" layoutY="303.0" prefHeight="25.0" prefWidth="370.0" promptText="Location" />
-      <CheckBox fx:id="signupCheckBoxMale" layoutX="236.0" layoutY="275.0" mnemonicParsing="false" selected="true" text="Male" />
-      <CheckBox fx:id="signupCheckBoxFemale" layoutX="391.0" layoutY="275.0" mnemonicParsing="false" text="Female" />
+      <TextField fx:id="signupFirstName" layoutX="165.0" layoutY="136.0" prefHeight="25.0" prefWidth="370.0" promptText="First Name" />
+      <TextField fx:id="signupLastName" layoutX="165.0" layoutY="175.0" prefHeight="25.0" prefWidth="370.0" promptText="Last Name" />
+      <TextField fx:id="signupUsername" layoutX="165.0" layoutY="213.0" prefHeight="25.0" prefWidth="370.0" promptText="Username" />
+      <TextField fx:id="signupLocation" layoutX="165.0" layoutY="312.0" prefHeight="25.0" prefWidth="370.0" promptText="Location" />
+      <CheckBox fx:id="signupCheckBoxMale" layoutX="236.0" layoutY="284.0" mnemonicParsing="false" text="Male" />
+      <CheckBox fx:id="signupCheckBoxFemale" layoutX="391.0" layoutY="284.0" mnemonicParsing="false" text="Female" />
       <Button fx:id="signupButton" layoutX="165.0" layoutY="351.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="370.0" style="-fx-background-color: #212121;" text="Sign Up" textFill="WHITE" />
-      <PasswordField fx:id="signupPassword" layoutX="165.0" layoutY="238.0" prefHeight="25.0" prefWidth="370.0" promptText="Password" />
+      <PasswordField fx:id="signupPassword" layoutX="165.0" layoutY="250.0" prefHeight="25.0" prefWidth="370.0" promptText="Password" />
+      <Label fx:id="missingInfoLabel" alignment="CENTER" layoutX="165.0" layoutY="112.0" prefHeight="17.0" prefWidth="370.0" text="Please fill out every field below" textFill="#fc0101" visible="false">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="usernameTakenLabel" alignment="CENTER" layoutX="165.0" layoutY="112.0" prefHeight="17.0" prefWidth="370.0" text="Current Username already exists" textFill="RED" visible="false">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
